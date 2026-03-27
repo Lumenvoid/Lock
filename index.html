@@ -3,68 +3,111 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lockscreen</title>
+<title>iPhone Lock</title>
+
 <style>
 body {
     margin: 0;
-    font-family: Arial;
-    background: black;
+    font-family: -apple-system;
+    background: url('https://i.imgur.com/8Km9tLL.jpg') no-repeat center/cover;
     color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     text-align: center;
 }
 
-.container {
-    width: 90%;
+.time {
+    font-size: 70px;
+    margin-top: 80px;
 }
 
-input {
-    padding: 15px;
+.date {
     font-size: 20px;
-    text-align: center;
-    width: 200px;
-    border-radius: 10px;
-    border: none;
-    margin-top: 20px;
+    margin-bottom: 40px;
 }
 
-button {
-    padding: 10px 20px;
-    font-size: 18px;
-    margin-top: 15px;
-    border-radius: 10px;
-    border: none;
+.dots {
+    font-size: 30px;
+    letter-spacing: 10px;
 }
 
-#error {
-    color: red;
-    margin-top: 10px;
+.keypad button {
+    width: 70px;
+    height: 70px;
+    margin: 10px;
+    font-size: 25px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: white;
 }
+
 </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h1>🔒 Ontgrendel</h1>
-    <input type="password" id="code" placeholder="Voer code in">
+<div class="time" id="time"></div>
+<div class="date" id="date"></div>
+
+<div class="dots" id="dots">⚪⚪⚪⚪</div>
+
+<div class="keypad">
     <br>
-    <button onclick="checkCode()">OK</button>
-    <p id="error"></p>
+    <button onclick="add(1)">1</button>
+    <button onclick="add(2)">2</button>
+    <button onclick="add(3)">3</button><br>
+    <button onclick="add(4)">4</button>
+    <button onclick="add(5)">5</button>
+    <button onclick="add(6)">6</button><br>
+    <button onclick="add(7)">7</button>
+    <button onclick="add(8)">8</button>
+    <button onclick="add(9)">9</button><br>
+    <button onclick="reset()">⌫</button>
+    <button onclick="add(0)">0</button>
 </div>
 
 <script>
-function checkCode() {
-    let code = document.getElementById("code").value;
+let code = "";
+let correct = "1234";
 
-    if(code === "1234") {
-        window.location.href = "https://discord.com/"; // wat opent na juiste code
-    } else {
-        document.getElementById("error").innerText = "Foute code!";
+function updateDots() {
+    document.getElementById("dots").innerText = "●".repeat(code.length) + "⚪".repeat(4-code.length);
+}
+
+function add(num) {
+    if(code.length < 4){
+        code += num;
+        updateDots();
+    }
+
+    if(code.length === 4){
+        if(code === correct){
+            window.location.href = "https://google.com";
+        } else {
+            code = "";
+            updateDots();
+            alert("Foute code!");
+        }
     }
 }
+
+function reset(){
+    code = "";
+    updateDots();
+}
+
+// Tijd & datum
+function updateTime(){
+    let now = new Date();
+    document.getElementById("time").innerText =
+        now.getHours().toString().padStart(2,'0') + ":" +
+        now.getMinutes().toString().padStart(2,'0');
+
+    document.getElementById("date").innerText =
+        now.toLocaleDateString('nl-NL', { weekday:'long', day:'numeric', month:'long' });
+}
+
+setInterval(updateTime,1000);
+updateTime();
 </script>
 
 </body>
