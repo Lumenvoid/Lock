@@ -1,1 +1,71 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lockscreen</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
 
+.container {
+    width: 90%;
+}
+
+input {
+    padding: 15px;
+    font-size: 20px;
+    text-align: center;
+    width: 200px;
+    border-radius: 10px;
+    border: none;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 18px;
+    margin-top: 15px;
+    border-radius: 10px;
+    border: none;
+}
+
+#error {
+    color: red;
+    margin-top: 10px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🔒 Ontgrendel</h1>
+    <input type="password" id="code" placeholder="Voer code in">
+    <br>
+    <button onclick="checkCode()">OK</button>
+    <p id="error"></p>
+</div>
+
+<script>
+function checkCode() {
+    let code = document.getElementById("code").value;
+
+    if(code === "1234") {
+        window.location.href = "https://google.com"; // wat opent na juiste code
+    } else {
+        document.getElementById("error").innerText = "Foute code!";
+    }
+}
+</script>
+
+</body>
+</html>
